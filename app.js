@@ -21,6 +21,7 @@ http.createServer(function(request, response){
                 let message = "Изучаем Node.js"; 
                 let header = "Главная страница";
                 data = data.replace("{header}", header).replace("{message}", message);
+
                 response.end(data);
                 // fs.readFile("public/index2.html", "utf8", function(error, data){
                  
@@ -33,8 +34,15 @@ http.createServer(function(request, response){
         })
     }
     else{
+        if(request.url=="/some.doc"){
+            response.writeHead(200, {"Content-Type" : "application/txt"});
+            fs.createReadStream("some.txt").pipe(response);
+        }
+        else{
+            response.end("hello world!");
+        }
         // во всех остальных случаях отправляем строку hello world!
-        response.end("Hello World!");
+
     }
     
 }).listen(3000);
